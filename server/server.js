@@ -61,3 +61,28 @@ app.post("/pets", async (request, response) => {
 app.listen(8080, () => {
   console.log("Server is running on port 8080.");
 });
+
+/*
+functions
+*/
+
+// check if a value is present in a given column in a table
+// return the id of the (first) matching row or false if there is no matching row
+async function isInTable(table, column, value) {
+  const selectResult = await db.query(
+    `SELECT * FROM ${table} WHERE ${column}='${value}'`
+  );
+  if (selectResult.rows.length <= 0) {
+    return false;
+  } else {
+    return selectResult.rows[0].id;
+  }
+}
+
+app.get("/isInTable", async (request, response) => {
+  const { table, column, value } = request.body;
+  const result = await isInTable(table, column, value);
+  response.json(
+    `Value: '${value}' matches the value of the column '${column}' in table '${table}' on row id: ${result}`
+  );
+});
