@@ -73,16 +73,22 @@ async function isInTable(table, column, value) {
     `SELECT * FROM ${table} WHERE ${column}='${value}'`
   );
   if (selectResult.rows.length <= 0) {
-    return false;
+    return { found: false };
   } else {
-    return selectResult.rows[0].id;
+    return { found: true, id: selectResult.rows[0].id };
   }
 }
 
 app.get("/isInTable", async (request, response) => {
   const { table, column, value } = request.body;
-  const result = await isInTable(table, column, value);
-  response.json(
-    `Value: '${value}' matches the value of the column '${column}' in table '${table}' on row id: ${result}`
-  );
+  const { found, id } = await isInTable(table, column, value);
+  if (found) {
+    response.json(
+      `Value: '${value}' matches the value of the column '${column}' in table '${table}' on row id: ${id}`
+    );
+  } else {
+    response.json(
+      `Value: '${value}' not found in column '${column}' in table '${table}'`
+    );
+  }
 });
