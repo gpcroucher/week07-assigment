@@ -30,19 +30,9 @@ app.post("/pets", async (request, response) => {
       throw new Error(); // TODO: make this more informative and feed this to the catch block
     }
 
-    // add the owner to the DB and save the ID
-    const ownerInsertResult = await db.query(
-      `INSERT INTO week07_assignment_pet_owners (name) VALUES ($1) RETURNING id`,
-      [ownerName]
-    );
-    const ownerID = ownerInsertResult.rows[0].id;
+    const ownerID = await addOwner(ownerName);
 
-    // add the species to the DB and save the ID
-    const speciesInsertResult = await db.query(
-      `INSERT INTO week07_assignment_pet_species (name) VALUES ($1) RETURNING id`,
-      [petSpecies]
-    );
-    const speciesID = speciesInsertResult.rows[0].id;
+    const speciesID = await addSpecies(petSpecies);
 
     // add the pet to the DB using the owner and species IDs
     const petInsertResult = await db.query(
@@ -65,6 +55,52 @@ app.listen(8080, () => {
 /*
 functions
 */
+
+// add an owner to the database
+// return the ID of the new record
+async function addOwner(name) {
+  // check if the owner is already in the DB
+  const { found, id } = await isInTable(
+    "week07_assignment_pet_owners",
+    "name",
+    name
+  );
+
+  // exit early if the owner is found
+  if (found) {
+    return id;
+  }
+
+  // add the owner to the DB and return the ID
+  const ownerInsertResult = await db.query(
+    `INSERT INTO week07_assignment_pet_owners (name) VALUES ($1) RETURNING id`,
+    [name]
+  );
+  return ownerInsertResult.rows[0].id;
+}
+
+// add a species to the database
+// return the ID of the new record
+async function addSpecies(name) {
+  // check if the species is already in the DB
+  const { found, id } = await isInTable(
+    "week07_assignment_pet_species",
+    "name",
+    name
+  );
+
+  // exit early if the species is found
+  if (found) {
+    return id;
+  }
+
+  // add the species to the DB and save the ID
+  const speciesInsertResult = await db.query(
+    `INSERT INTO week07_assignment_pet_species (name) VALUES ($1) RETURNING id`,
+    [name]
+  );
+  return speciesInsertResult.rows[0].id;
+}
 
 // check if a value is present in a given column in a table
 // return the id of the (first) matching row or false if there is no matching row
