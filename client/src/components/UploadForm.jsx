@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./UploadForm.css";
 
 export default function UploadForm() {
   const [formData, setFormData] = useState({
@@ -9,7 +10,7 @@ export default function UploadForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="upload-form">
         <label htmlFor="ownerName">Name of owner</label>
         <input
           type="text"
@@ -28,13 +29,14 @@ export default function UploadForm() {
           onChange={handleChange}
         />
         <br />
-        <label htmlFor="petSpecies">Species of pet (eg dog, cat)</label>
+        <label htmlFor="petSpecies">Species of pet</label>
         <input
           type="text"
           name="petSpecies"
           id="petSpecies"
           value={formData.petSpecies}
           onChange={handleChange}
+          placeholder="eg dog, cat"
         />
         <br />
         <button type="submit">Submit</button>
