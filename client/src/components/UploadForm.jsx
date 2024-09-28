@@ -6,6 +6,8 @@ export default function UploadForm() {
     ownerName: "",
     petName: "",
     petSpecies: "",
+    age: "",
+    breed: "",
   });
 
   return (
@@ -27,6 +29,26 @@ export default function UploadForm() {
           id="petName"
           value={formData.petName}
           onChange={handleChange}
+        />
+        <br />
+        <label htmlFor="age">Age of pet</label>
+        <input
+          type="text"
+          name="age"
+          id="age"
+          value={formData.age}
+          onChange={handleChange}
+          placeholder="integers only"
+        />
+        <br />
+        <label htmlFor="breed">Breed of pet</label>
+        <input
+          type="text"
+          name="breed"
+          id="breed"
+          value={formData.breed}
+          onChange={handleChange}
+          placeholder="eg Cocker Spaniel, Siamese"
         />
         <br />
         <label htmlFor="petSpecies">Species of pet</label>
@@ -59,6 +81,8 @@ export default function UploadForm() {
         ownerName: formData.ownerName,
         petName: formData.petName,
         petSpecies: formData.petSpecies,
+        age: formData.age,
+        breed: formData.breed,
       }),
     });
   }

@@ -30,6 +30,8 @@ export default function ViewPets() {
           <div key={index}>
             <PetCard
               petname={pet.petname}
+              age={"" + pet.age}
+              breed={pet.breed}
               species={pet.species}
               ownername={pet.ownername}
             ></PetCard>
