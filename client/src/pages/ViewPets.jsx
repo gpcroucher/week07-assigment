@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
+import PetCard from "../components/PetCard";
 
 export default function ViewPets() {
   const [pets, setPets] = useState([
@@ -22,14 +23,16 @@ export default function ViewPets() {
   return (
     <>
       <NavBar exclude={["/view"]} />
-      <p>Hello!</p>
+      <p>Welcome to the pet gallery!</p>
       {pets.map((pet, index) => {
         console.log("Attempted to map pets");
         return (
           <div key={index}>
-            <p>
-              {pet.petname} is a {pet.species} who belongs to {pet.ownername}
-            </p>
+            <PetCard
+              petname={pet.petname}
+              species={pet.species}
+              ownername={pet.ownername}
+            ></PetCard>
           </div>
         );
       })}

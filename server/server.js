@@ -15,15 +15,16 @@ const db = new pg.Pool({
 
 app.get("/pets", async (request, response) => {
   const dbResult = await db.query(`
-    SELECT pets.name AS petname, owners.name AS ownername, species.name AS species
+    SELECT pets.name AS petname, pets.age AS age, owners.name AS ownername, breeds.name AS breed, species.name AS species
     FROM week07_assignment_pets AS pets
     INNER JOIN week07_assignment_pet_owners AS owners ON owner_id = owners.id
-    INNER JOIN week07_assignment_pet_species AS species ON species_id = species.id;`);
+    INNER JOIN week07_assignment_pet_breeds AS breeds ON breed_id = breeds.id
+    INNER JOIN week07_assignment_pet_species AS species ON breeds.species_id = species.id;`);
   response.json(dbResult.rows);
 });
 
 app.post("/pets", async (request, response) => {
-  const { petName, petSpecies, ownerName } = request.body;
+  const { petName, age, breed, petSpecies, ownerName } = request.body;
   try {
     // check that the client has sent all the details we need
     if (petName == null || petSpecies == null || ownerName == null) {
@@ -32,12 +33,12 @@ app.post("/pets", async (request, response) => {
 
     const ownerID = await addOwner(ownerName);
 
-    const speciesID = await addSpecies(petSpecies);
+    const breedID = await addBreed(breed, petSpecies);
 
     // add the pet to the DB using the owner and species IDs
     const petInsertResult = await db.query(
-      `INSERT INTO week07_assignment_pets (name, owner_id, species_id) VALUES ($1, $2, $3);`,
-      [petName, ownerID, speciesID]
+      `INSERT INTO week07_assignment_pets (name, age, owner_id, breed_id) VALUES ($1, $2, $3, $4);`,
+      [petName, age, ownerID, breedID]
     );
 
     response.json(petInsertResult);
@@ -77,6 +78,30 @@ async function addOwner(name) {
     [name]
   );
   return ownerInsertResult.rows[0].id;
+}
+
+async function addBreed(name, species) {
+  // check if the species is already in the DB
+  const { found, id } = await isInTable(
+    "week07_assignment_pet_breeds",
+    "name",
+    name
+  );
+
+  // exit early if the species is found
+  if (found) {
+    return id;
+  }
+
+  // get the species ID or add the species to the DB if necessary
+  const speciesID = await addSpecies(species);
+
+  // add the breed to the DB and save the ID
+  const breedInsertResult = await db.query(
+    `INSERT INTO week07_assignment_pet_breeds (name, species_id) VALUES ($1, $2) RETURNING id`,
+    [name, speciesID]
+  );
+  return breedInsertResult.rows[0].id;
 }
 
 // add a species to the database

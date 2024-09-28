@@ -22,27 +22,35 @@ async function makeTables() {
   await db.query(`
     DROP TABLE IF EXISTS week07_assignment_pet_owners CASCADE;
     DROP TABLE IF EXISTS week07_assignment_pet_species CASCADE;
+    DROP TABLE IF EXISTS week07_assignment_pet_breeds CASCADE;
     DROP TABLE IF EXISTS week07_assignment_pets;
     `);
   await db.query(`
     CREATE TABLE week07_assignment_pet_owners (
-        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        name VARCHAR(255) NOT NULL
+      id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      name VARCHAR(255) NOT NULL
     );
 
     CREATE TABLE week07_assignment_pet_species (
-        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(255) NOT NULL,
-    type VARCHAR(100)
+      id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      name VARCHAR(255) NOT NULL,
+      type VARCHAR(100)
+    );
+
+    CREATE TABLE week07_assignment_pet_breeds (
+      id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      name VARCHAR(255) NOT NULL,
+      species_id INT NOT NULL REFERENCES week07_assignment_pet_species (id)
     );
 
     CREATE TABLE week07_assignment_pets (
-        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        name VARCHAR(100) NOT NULL,
-        owner_id INT NOT NULL,
-        species_id INT NOT NULL,
-        FOREIGN KEY (owner_id) REFERENCES week07_assignment_pet_owners (id),
-        FOREIGN KEY (species_id) REFERENCES week07_assignment_pet_species (id)
+      id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+      name VARCHAR(100) NOT NULL,
+      age INT,
+      owner_id INT NOT NULL,
+      breed_id INT NOT NULL,
+      FOREIGN KEY (owner_id) REFERENCES week07_assignment_pet_owners (id),
+      FOREIGN KEY (breed_id) REFERENCES week07_assignment_pet_breeds (id)
     );
     `);
 }
