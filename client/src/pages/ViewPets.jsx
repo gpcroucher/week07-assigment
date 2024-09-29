@@ -24,7 +24,6 @@ export default function ViewPets() {
 
   useEffect(() => {
     fetchPets();
-    return; // cleanup function?
 
     async function fetchPets() {
       console.log("Fetching pets...");
@@ -41,7 +40,6 @@ export default function ViewPets() {
       <p>Welcome to the pet gallery!</p>
       <div className="pet-gallery">
         {pets.map((pet, index) => {
-          console.log("Attempted to map pets");
           return (
             <PetCard
               key={index}

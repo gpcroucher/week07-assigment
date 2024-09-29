@@ -30,16 +30,12 @@ app.get("/pets", async (_, response) => {
 app.post("/pets", async (request, response) => {
   const { petName, age, breed, petSpecies, ownerName } = request.body;
   try {
-    console.log(
-      !petName || (!age && age != 0) || !breed || !petSpecies || !ownerName
-    );
     // check that the client has sent all the details we need
     if (!petName || (!age && age != 0) || !breed || !petSpecies || !ownerName) {
       throw new TypeError("Client didn't send some of the required pet info.");
     }
 
     const ownerID = await addOwner(ownerName);
-
     const breedID = await addBreed(breed, petSpecies);
 
     // add the pet to the DB using the owner and species IDs
@@ -48,7 +44,8 @@ app.post("/pets", async (request, response) => {
       [petName, age, ownerID, breedID]
     );
 
-    response.json(petInsertResult);
+    // send back OK status
+    response.status(200).send();
   } catch (error) {
     console.log("Something went wrong.", error.message);
     response.status(400).json(error.message); // Bad Request

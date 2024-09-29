@@ -3,13 +3,14 @@ import "./UploadForm.css";
 const serverURL = import.meta.env.VITE_SERVER_URL;
 
 export default function UploadForm() {
-  const [formData, setFormData] = useState({
+  const blankData = {
     ownerName: "",
     petName: "",
     petSpecies: "",
     age: "",
     breed: "",
-  });
+  };
+  const [formData, setFormData] = useState(blankData);
 
   return (
     <>
@@ -86,6 +87,10 @@ export default function UploadForm() {
         breed: formData.breed,
       }),
     });
+    if (result.status == 200) {
+      console.log("Successfully uploaded pet.");
+      setFormData(blankData);
+    }
     if (result.status == 400) {
       console.log(alert("Please fill in all the fields before submitting."));
     }
