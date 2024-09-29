@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import NavBar from "../components/NavBar";
+import Header from "../components/Header";
 import PetCard from "../components/PetCard";
 import "./ViewPets.css";
 const serverURL = import.meta.env.VITE_SERVER_URL;
@@ -30,7 +30,7 @@ export default function ViewPets() {
 
   return (
     <>
-      <NavBar exclude={["/view"]} />
+      <Header exclude={["/view"]}></Header>
       <p>Welcome to the pet gallery!</p>
       <div className="pet-gallery">
         {pets.map((pet, index) => {

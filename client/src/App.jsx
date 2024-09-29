@@ -7,7 +7,6 @@ import ViewPets from "./pages/ViewPets";
 function App() {
   return (
     <>
-      <h1>Petbook</h1>
       <Routes>
         <Route path="/" element={<Homepage />}></Route>
         <Route path="/add" element={<PetUpload />}></Route>

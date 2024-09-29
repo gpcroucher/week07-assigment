@@ -1,10 +1,10 @@
-import NavBar from "../components/NavBar";
+import Header from "../components/Header";
 import UploadForm from "../components/UploadForm";
 
 export default function PetUpload() {
   return (
     <>
-      <NavBar exclude={["/add"]} />
+      <Header exclude={["/add"]}></Header>
       <UploadForm />
     </>
   );
