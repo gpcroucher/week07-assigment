@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import PetCard from "../components/PetCard";
+const serverURL = import.meta.env.VITE_SERVER_URL;
 
 export default function ViewPets() {
   const [pets, setPets] = useState([
@@ -19,7 +20,7 @@ export default function ViewPets() {
 
     async function fetchPets() {
       console.log("Fetching pets...");
-      const petsData = await fetch(`http://localhost:8080/pets`);
+      const petsData = await fetch(`${serverURL}/pets`);
       const newPets = await petsData.json();
       // return pets;
       setPets(await newPets);

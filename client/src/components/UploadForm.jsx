@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./UploadForm.css";
+const serverURL = import.meta.env.VITE_SERVER_URL;
 
 export default function UploadForm() {
   const [formData, setFormData] = useState({
@@ -72,7 +73,7 @@ export default function UploadForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await fetch("http://localhost:8080/pets", {
+    await fetch(`${serverURL}}/pets`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
