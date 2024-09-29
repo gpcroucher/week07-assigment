@@ -57,13 +57,16 @@ async function makeTables() {
 
 async function insertExamples() {
   await db.query(`
-    INSERT INTO week07_assignment_pet_owners (name) VALUES ('Turner') RETURNING id;
-    INSERT INTO week07_assignment_pet_owners (name) VALUES ('Jon Arbuckle') RETURNING  id;
+    INSERT INTO week07_assignment_pet_owners (name) VALUES ('Tim Smith');
+    INSERT INTO week07_assignment_pet_owners (name) VALUES ('Jon Arbuckle');
 
-    INSERT INTO week07_assignment_pet_species (name) VALUES ('dog') RETURNING id;
-    INSERT INTO week07_assignment_pet_species (name) VALUES ('cat') RETURNING id;
+    INSERT INTO week07_assignment_pet_species (name) VALUES ('dog');
+    INSERT INTO week07_assignment_pet_species (name) VALUES ('cat');
 
-    INSERT INTO week07_assignment_pets (name, owner_id, species_id) VALUES ('Hooch', 1, 1);
-    INSERT INTO week07_assignment_pets (name, owner_id, species_id) VALUES ('Garfield', 2, 2);
+    INSERT INTO week07_assignment_pet_breeds (name, species_id) VALUES ('Cocker Spaniel', 1);
+    INSERT INTO week07_assignment_pet_breeds (name, species_id) VALUES ('Persian', 2);
+
+    INSERT INTO week07_assignment_pets (name, age, owner_id, breed_id) VALUES ('Obi', 1, 1, 1);
+    INSERT INTO week07_assignment_pets (name, age, owner_id, breed_id) VALUES ('Garfield', 7, 2, 2);
     `);
 }
