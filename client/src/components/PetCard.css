@@ -1,5 +1,6 @@
 .pet-card {
   border: 1px solid black;
+  border-radius: 5px;
   padding: 1rem;
 }
 
