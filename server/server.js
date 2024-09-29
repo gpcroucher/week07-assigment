@@ -146,6 +146,8 @@ async function isInTable(table, column, value) {
   }
 }
 
+// used for testing but potentially dangerous in production because it could be used to access my other supabase tables
+/*
 app.get("/isInTable", async (request, response) => {
   const { table, column, value } = request.body;
   const { found, id } = await isInTable(table, column, value);
@@ -159,3 +161,4 @@ app.get("/isInTable", async (request, response) => {
     );
   }
 });
+*/

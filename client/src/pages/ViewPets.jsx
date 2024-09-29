@@ -43,15 +43,14 @@ export default function ViewPets() {
         {pets.map((pet, index) => {
           console.log("Attempted to map pets");
           return (
-            <div key={index}>
-              <PetCard
-                petname={pet.petname}
-                age={"" + pet.age}
-                breed={pet.breed}
-                species={pet.species}
-                ownername={pet.ownername}
-              ></PetCard>
-            </div>
+            <PetCard
+              key={index}
+              petname={pet.petname}
+              age={"" + pet.age}
+              breed={pet.breed}
+              species={pet.species}
+              ownername={pet.ownername}
+            ></PetCard>
           );
         })}
       </div>
