@@ -13,7 +13,11 @@ const db = new pg.Pool({
   connectionString: process.env.DB_CONN_STRING,
 });
 
-app.get("/pets", async (request, response) => {
+app.get("/", async (_, response) => {
+  response.json("You are looking at my root route, how roude!");
+});
+
+app.get("/pets", async (_, response) => {
   const dbResult = await db.query(`
     SELECT pets.name AS petname, pets.age AS age, owners.name AS ownername, breeds.name AS breed, species.name AS species
     FROM week07_assignment_pets AS pets
@@ -80,6 +84,8 @@ async function addOwner(name) {
   return ownerInsertResult.rows[0].id;
 }
 
+// add an owner to the database
+// return the ID of the new record
 async function addBreed(name, species) {
   // check if the species is already in the DB
   const { found, id } = await isInTable(
