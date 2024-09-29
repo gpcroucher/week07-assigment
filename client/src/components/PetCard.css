@@ -1,3 +1,12 @@
 .pet-card {
   border: 1px solid black;
+  padding: 1rem;
+}
+
+.pet-card h4 {
+  margin-top: 0;
+}
+
+.pet-card p {
+  margin: 0;
 }
