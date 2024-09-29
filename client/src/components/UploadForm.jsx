@@ -73,7 +73,7 @@ export default function UploadForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await fetch(`${serverURL}}/pets`, {
+    await fetch(`${serverURL}/pets`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
