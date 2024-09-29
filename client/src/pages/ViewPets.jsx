@@ -9,9 +9,16 @@ export default function ViewPets() {
     {
       petname: "Obi",
       age: 1,
-      ownername: "Tim",
+      ownername: "Tim Smith",
       breed: "Cocker Spaniel",
       species: "dog",
+    },
+    {
+      petname: "Garfield",
+      age: 7,
+      ownername: "Jon Arbuckle",
+      breed: "Persian",
+      species: "cat",
     },
   ]);
 
