@@ -1,11 +1,15 @@
 import PropTypes from "prop-types";
+import "./PetCard.css";
 
 export default function PetCard(props) {
   return (
-    <p>
-      {props.petname} is a {props.age}-year-old {props.breed} {props.species}{" "}
-      who belongs to {props.ownername}
-    </p>
+    <div className="pet-card">
+      <h4>{props.petname}</h4>
+      <p>
+        a {props.age}-year-old {props.breed} {props.species} who belongs to{" "}
+        {props.ownername}
+      </p>
+    </div>
   );
 }
 

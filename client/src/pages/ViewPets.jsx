@@ -4,7 +4,13 @@ import PetCard from "../components/PetCard";
 
 export default function ViewPets() {
   const [pets, setPets] = useState([
-    { petname: "Obi", ownername: "Tim", species: "dog" },
+    {
+      petname: "Obi",
+      age: 1,
+      ownername: "Tim",
+      breed: "Cocker Spaniel",
+      species: "dog",
+    },
   ]);
 
   useEffect(() => {
