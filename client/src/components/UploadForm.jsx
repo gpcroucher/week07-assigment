@@ -73,7 +73,7 @@ export default function UploadForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    await fetch(`${serverURL}/pets`, {
+    const result = await fetch(`${serverURL}/pets`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,5 +86,8 @@ export default function UploadForm() {
         breed: formData.breed,
       }),
     });
+    if (result.status == 400) {
+      console.log(alert("Please fill in all the fields before submitting."));
+    }
   }
 }
